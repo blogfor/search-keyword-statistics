@@ -51,6 +51,24 @@ function ss_menu() {
 }
 
 
+
+
+
+// Function that outputs the contents of the dashboard widget
+function dashboard_widget_function( $post, $callback_args ) {
+	echo "Hello World, this is my first Dashboard Widget!";
+}
+
+// Function used in the action hook
+function add_dashboard_widgets() {
+	wp_add_dashboard_widget('dashboard_widget', 'Example Dashboard Widget', 'dashboard_widget_function');
+}
+
+// Register the new dashboard widget with the 'wp_dashboard_setup' action
+add_action('wp_dashboard_setup', 'add_dashboard_widgets' );
+
+
+
 /* Uninstall and Activation handlers */
 register_activation_hook( __FILE__, 'ss_activate' );
 register_deactivation_hook( __FILE__, 'ss_deactivate' );
