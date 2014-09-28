@@ -55,13 +55,91 @@ function ss_menu() {
 
 
 // Function that outputs the contents of the dashboard widget
-function dashboard_widget_function( $post, $callback_args ) {
-	echo "Hello World, this is my first Dashboard Widget!";
+function ss_dashboard_widget_function($post, $callback_args ) {
+	
+	  global $wpdb;
+        $rows=$wpdb->get_results( "SELECT * FROM " . SS_TABLE . " ORDER BY repeat_count DESC LIMIT 0,10" );
+        
+?>
+<div>
+	<h3> Search Keyword Statistics <span style="color: gray;">1.3</span> - Most repeated result</h3>
+
+        <div>
+            <?php 
+            
+            if(isset($error) && $error!='')
+            {
+                echo '<span style="color:red;font-size:12px;font-weight:bold;">'.$error.'</span>';
+            }
+            
+           
+            ?>
+            
+            
+          
+        </div>
+<div>
+    <form action="" method="post" name="frmKeyword" >
+<table cellpadding="1" cellspacing="1" border="1" class="display" id="example" width="100%">
+	<thead>
+		<tr>
+						<th>Sl No</th>
+                        <th>keywords</th>
+                       	<th>Repeat</th>
+                        <th>No. of Result</th>
+       </tr>
+	</thead>
+	<tbody>
+            <?php
+            
+            for($i=0;$i<count($rows);$i++)
+	   {
+                if(is_numeric($rows[$i]->user))
+                {
+                    $user_info =get_userdata($rows[$i]->user);
+                    $user=$user_info->user_login;
+                }
+                else
+                    $user='Non-Registered';
+                
+           ?>
+		<tr class="odd gradeX">
+                	<td><?php echo $i+1; ?></td>
+			<td><?php echo $rows[$i]->keywords; ?></td>
+			
+			<td class="center"><?php echo $rows[$i]->repeat_count; ?></td>
+                        <td class="center"><?php echo $rows[$i]->search_count; ?></td>
+                        
+		</tr>
+                <?php
+                }
+            ?>
+		
+	</tbody>
+	<tfoot>
+		<tr>
+                       
+			<th>Sl No</th>
+                        <th>keywords</th>
+                      		
+			<th>Repeat</th>
+                         <th>No. of Result</th>
+                    
+		</tr>
+	</tfoot>
+</table>
+        
+    </form>
+</div>
+
+</div>
+
+<?php
 }
 
 // Function used in the action hook
 function add_dashboard_widgets() {
-	wp_add_dashboard_widget('dashboard_widget', 'Example Dashboard Widget', 'dashboard_widget_function');
+	wp_add_dashboard_widget('dashboard_widget', 'Keyword Statistics', 'ss_dashboard_widget_function');
 }
 
 // Register the new dashboard widget with the 'wp_dashboard_setup' action
