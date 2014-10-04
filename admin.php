@@ -29,8 +29,34 @@ function ss_keyword_trace( ) {
 	}
     }
 	
+	catch_post_type();
+}
+function curPageURL() {
+ $pageURL = 'http';
+ if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+ $pageURL .= "://";
+ if ($_SERVER["SERVER_PORT"] != "80") {
+  $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+ } else {
+  $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+ }
+ return $pageURL;
 }
 
+	function catch_post_type()
+	{
+		$postid = url_to_postid(curPageURL());
+		$listar=get_option('ss_post_types');
+		$listar=unserialize($listar);
+		
+		$currentposttype=get_post_type($postid);
+		
+		if(in_array($currentposttype,$listar))
+		{
+		echo 'count';
+		}
+		
+	}
 /* Admin menu */
 add_action( 'admin_menu', 'ss_menu' );
 
@@ -48,9 +74,38 @@ function admin_dashboard() {
 
 function ss_menu() {
 	add_menu_page( 'Keyword Statistics', 'Keyword Statistics', 'administrator', 'ss-menu', 'admin_dashboard' );
+	
+	add_submenu_page( 'ss-menu', 'Active Post Type', 'Active Post Type', 'administrator','active-post-type', 'active_post_type_func' );
 }
 
+function active_post_type_func()
+{
+	$args = array(
+	   'public'   => true,
+	   '_builtin' => true
+	);
 
+	$output = 'names'; // names or objects, note names is the default
+	//$operator = 'and'; // 'and' or 'or'
+	
+	if(isset($_POST['ss_post']))
+	{
+		$arr=serialize($_POST['ss_post']);
+		update_option('ss_post_types',$arr);
+	}
+	
+	$post_types = get_post_types( $args, $output ); 
+	echo '<form method="post">';
+	echo '<div><div style="float:left; width:200px;">Operation</div><div style="float:left; width:200px;"> Post Type</div></div>';
+	//var_dump($post_types);
+	
+	foreach ( $post_types  as $post_type ) {
+	if($post_type!='attachment')
+	   echo '<div style="clear:both;"><div style="float:left; width:200px;"><input type="checkbox" name="ss_post[]" value="'.$post_type.'" checked="checked"></div><div style="float:left; width:200px;"> ' . $post_type . '</div></div>';
+	}
+	echo '<input type="submit" name="submit" value="submit">';
+	echo '</form>';
+}
 
 
 
@@ -265,6 +320,8 @@ function ss_deactivate_uninstall( ) {
 function ss_deactivate( ) {
 	delete_option( 'SS_BG_VERSION' );
 }
+
+
 
 
 ?>
