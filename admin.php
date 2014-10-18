@@ -3,7 +3,7 @@
   Plugin Name: Search Keyword Statistics
   Plugin URI: http://www.blogfordeveloper.com/
   Description: Keep statistics of keywords being searched on your website.
-  Version: 1.3
+  Version: 2.0
   Author: Ramen Dey & Bivash Kanti Pal
   Author URI: http://www.blogfordeveloper.com/about-us/
 */
@@ -12,7 +12,7 @@
 global $wpdb;
 
 define( 'SS_TABLE', $wpdb->prefix . 'search_statistics' );
-define('SS_BG_VERSION',13);
+define('SS_BG_VERSION',20);
 
 /* Handlers for Detect and save search keywords */
 add_action( 'wp_loaded', 'ss_keyword_trace' );
@@ -117,7 +117,7 @@ function ss_dashboard_widget_function($post, $callback_args ) {
         
 ?>
 <div>
-	<h3> Search Keyword Statistics <span style="color: gray;">1.3</span> - Most repeated result</h3>
+	<h3> Search Keyword Statistics <span style="color: gray;">2.0</span> - Most repeated result</h3>
 
         <div>
             <?php 

@@ -71,7 +71,7 @@
         
 	</script>
 <div>
-	<h3> Search Keyword Statistics <span style="color: gray;">1.3</span> </h3>
+	<h3> Search Keyword Statistics <span style="color: gray;">2.0</span> </h3>
 
         <div>
             <?php 

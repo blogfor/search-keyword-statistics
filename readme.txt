@@ -3,8 +3,8 @@ Contributors: Ramen Dey & Bivash Kanti Pal
 Donate link: 
 Tags: keywords, search query, incoming terms, user search keyword statistics
 Requires at least: 3.3
-Tested up to: 3.9
-Stable tag: 1.3
+Tested up to: 4.0
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,3 +30,5 @@ The plugin is easy to use. To open the plugin dashboard, just click on Keyword S
 *Exclude insight wp admin search.
 = 1.3 =
 * Update to 3.9
+= 2.0 =
+* Dashboard Widget Added
