@@ -3,7 +3,7 @@
   Plugin Name: Search Keyword Statistics
   Plugin URI: http://www.blogfordeveloper.com/
   Description: Keep statistics of keywords being searched on your website.
-  Version: 2.0
+  Version: 2.2
   Author: Ramen Dey & Bivash Kanti Pal
   Author URI: http://www.blogfordeveloper.com/about-us/
 */
@@ -12,7 +12,7 @@
 global $wpdb;
 
 define( 'SS_TABLE', $wpdb->prefix . 'search_statistics' );
-define('SS_BG_VERSION',20);
+define('SS_BG_VERSION',22);
 
 /* Handlers for Detect and save search keywords */
 add_action( 'wp_loaded', 'ss_keyword_trace' );
@@ -29,34 +29,9 @@ function ss_keyword_trace( ) {
 	}
     }
 	
-	catch_post_type();
-}
-function curPageURL() {
- $pageURL = 'http';
- if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
- $pageURL .= "://";
- if ($_SERVER["SERVER_PORT"] != "80") {
-  $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
- } else {
-  $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
- }
- return $pageURL;
+	
 }
 
-	function catch_post_type()
-	{
-		$postid = url_to_postid(curPageURL());
-		$listar=get_option('ss_post_types');
-		$listar=unserialize($listar);
-		
-		$currentposttype=get_post_type($postid);
-		
-		if(in_array($currentposttype,$listar))
-		{
-		echo 'count';
-		}
-		
-	}
 /* Admin menu */
 add_action( 'admin_menu', 'ss_menu' );
 
@@ -75,7 +50,7 @@ function admin_dashboard() {
 function ss_menu() {
 	add_menu_page( 'Keyword Statistics', 'Keyword Statistics', 'administrator', 'ss-menu', 'admin_dashboard' );
 	
-	add_submenu_page( 'ss-menu', 'Active Post Type', 'Active Post Type', 'administrator','active-post-type', 'active_post_type_func' );
+	//add_submenu_page( 'ss-menu', 'Active Post Type', 'Active Post Type', 'administrator','active-post-type', 'active_post_type_func' );
 }
 
 function active_post_type_func()
@@ -117,7 +92,7 @@ function ss_dashboard_widget_function($post, $callback_args ) {
         
 ?>
 <div>
-	<h3> Search Keyword Statistics <span style="color: gray;">2.0</span> - Most repeated result</h3>
+	<h3> Search Keyword Statistics <span style="color: gray;">2.2</span> - Most repeated result</h3>
 
         <div>
             <?php 
